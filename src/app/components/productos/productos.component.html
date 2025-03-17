@@ -1,0 +1,12 @@
+<div class="galeria">
+  <div *ngFor="let producto of productos" class="imagen-container">
+    <img [src]="producto.images[0]?.src" [alt]="producto.name" />
+    <div class="caption">{{ producto.name }}</div>
+    
+    <div class="botones">
+      <button (click)="agregarAlCarrito(producto.id)">🛒 Añadir al carrito</button>
+      <button (click)="comprarAhora(producto.id)">⚡ Comprar</button>
+      <button (click)="darMeGusta(producto.id)">❤️ Me gusta</button>
+    </div>
+  </div>
+</div>

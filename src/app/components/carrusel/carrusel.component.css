@@ -1,0 +1,145 @@
+
+.news-section {
+    display: flex;
+    flex-direction: column; /* Asegura que los elementos estén en columna */
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: auto; /* Cambiar de 100% a auto para evitar problemas */
+    border-radius: 20px;
+}
+.news-title{
+    font-family: 'Poppins', sans-serif; /* Fuente moderna y clara */
+    font-size: clamp(1.8rem, 4vw, 2.5rem); /* Tamaño adaptable */
+    font-weight: 700;
+    color: #ffffff; /* Blanco para destacar sobre imágenes */
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: 10px;
+    background: rgba(0, 0, 0, 0.6); /* Fondo semitransparente para mejorar legibilidad */
+    display: inline-block;
+    padding: 8px 15px;
+    border-radius: 8px;
+}
+.news-parrafo{
+    font-family: 'Open Sans', sans-serif; /* Fuente cómoda para lectura */
+    font-size: clamp(1rem, 2.5vw, 1.2rem); /* Tamaño flexible */
+    color: #f0f0f0; /* Color claro */
+    text-align: center;
+    max-width: 80%; /* Evita textos demasiado anchos */
+    margin: 0 auto;
+    background: rgba(0, 0, 0, 0.5); /* Fondo oscuro sutil para mejorar visibilidad */
+    padding: 10px 15px;
+    border-radius: 5px;
+}
+/* Responsividad específica para móviles */
+@media (max-width: 768px) {
+    .news-title {
+        font-size: 1.6rem;
+        padding: 6px 12px;
+    }
+
+    .news-parrafo {
+        font-size: 0.9rem;
+        max-width: 60%;
+        padding: 8px 12px;
+    }
+}
+
+.news-carousel-container {
+    position: relative;
+    width: 95%;
+    height: 500px; /* Fijar la altura para evitar problemas */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    border-radius: 20px;
+}
+
+.news-carousel {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    height: 100%;
+    border-radius: 20px;
+}
+
+.news-carousel-item {
+    flex: 1 0 100%;
+    /* Cada slide ocupa el 100% del contenedor */
+    height: 500px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+    border-radius: 20PX;
+}
+
+.news-content {
+    text-align: center;
+    /* Centra el texto dentro del contenedor */
+    color: white;
+    /* Cambia el color del texto si lo necesitas */
+    padding: 20px;
+    z-index: 2;
+    /* Asegura que el contenido esté sobre la imagen de fondo */
+}
+
+.news-image {
+    width: 100%;
+    max-height: 100%;
+    object-fit: cover;
+}
+
+.news-link {
+    display: inline-block;
+    margin-top: 10px;
+    background-color: #007bff;
+    color: white;
+    padding: 10px;
+    text-decoration: none;
+}
+
+.download-pdf {
+    display: inline-block;
+    margin-top: 10px;
+    background-color: #28a745;
+    color: white;
+    padding: 10px;
+    text-decoration: none;
+}
+
+.news-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(18, 183, 254, 0.824);
+    color: white;
+    border-radius: 100%;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+}
+
+.news-left-arrow {
+    left: 10px;
+}
+
+.news-right-arrow {
+    right: 10px;
+}
+
+.news-arrow:hover {
+    background-color: rgba(0, 115, 255, 0.8);
+}
+
+/* 🔹 Evitar que <app-productos> se desplace demasiado abajo */
+app-productos {
+    margin-top: 20px; /* Agrega un espacio pero evita que se empuje demasiado */
+    width: 100%;
+}

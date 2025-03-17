@@ -1,0 +1,25 @@
+<div class="galeria">
+    <div class="texto">
+        <h2>{{ titulo }}</h2>
+        <h4>{{ subtitulo }}</h4>
+        <button class="btn-descarga" (click)="descargarPDF()">Descargar PDF</button>
+    </div>
+    
+    <div class="imagenes">
+      <div class="imagen-container" *ngFor="let item of imagenes" (click)="abrirImagen(item.url)">
+        <img [src]="item.url" [alt]="item.descripcion" />
+        <div class="overlay">
+          <span class="icon-lupa">🔍</span>
+        </div>
+        <p class="descripcion">{{ item.descripcion }}</p>
+      </div>
+    </div>
+  
+    <!-- Modal para ver imagen en grande -->
+    <div class="modal" *ngIf="imagenSeleccionada" (click)="cerrarImagen()">
+      <div class="modal-content">
+        <img [src]="imagenSeleccionada" alt="Imagen ampliada" />
+      </div>
+    </div>
+  </div>
+  

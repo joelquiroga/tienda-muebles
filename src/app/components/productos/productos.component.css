@@ -1,0 +1,74 @@
+.galeria {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  /* Columnas flexibles */
+  gap: 15px;
+  padding: 20px;
+}
+
+/* 📌 Asegurar 2 columnas en móviles */
+@media (max-width: 600px) {
+  .galeria {
+    grid-template-columns: repeat(2, 1fr);
+    /* 2 columnas fijas en pantallas pequeñas */
+  }
+}
+
+/* 📌 Para pantallas muy pequeñas (ejemplo: 350px de ancho) */
+@media (max-width: 400px) {
+  .galeria {
+    grid-template-columns: 1fr;
+    /* 1 columna si el espacio es muy reducido */
+  }
+}
+
+.imagen-container {
+  position: relative;
+  cursor: pointer;
+  overflow: hidden;
+  border-radius: 10px;
+  transition: transform 0.3s ease-in-out;
+}
+
+.imagen-container img {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.imagen-container:hover {
+  transform: scale(1.05);
+}
+
+.caption {
+  position: absolute;
+  bottom: 10px;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  text-align: center;
+  padding: 5px;
+  font-size: 14px;
+}
+
+.botones {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.botones button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 8px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.botones button:hover {
+  background-color: #0056b3;
+}

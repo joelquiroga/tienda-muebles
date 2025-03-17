@@ -1,1 +1,243 @@
 /* You can add global styles to this file, and also import other style files */
+
+html,
+body {
+
+    background-image: url('https://i.pinimg.com/736x/f3/ec/de/f3ecdefcbc16429c653ff1ad9fe3584d.jpg');
+    background-size: cover;
+    background-position: center;
+    height: 100%;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+    /* Evita el desplazamiento horizontal */
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    scroll-behavior: smooth;
+
+}
+
+app-root {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+router-outlet {
+    flex-grow: 1;
+    
+}
+main {
+    flex-grow: 1;
+    
+}
+
+.footer-container {
+    margin-top: 13%;
+    height: auto;
+}
+
+
+/* Barra de navegación transparente -------------------------------------------------------------*/
+/* Barra de navegación */
+.navbar {
+    display: flex;
+    justify-content: space-around; /* Distribuye los elementos del navbar */
+    align-items: center;
+    width: 100%;
+    max-height: 60px;
+    padding: 0px;
+    background-color: rgba(0, 0, 0, 0.069);
+    position: flex;
+    top: 0;
+    left: 0;
+    z-index: 100;
+}
+
+/* Logo en el menú */
+.navbar img {
+    height: 75px;
+    margin-top: 10px;
+}
+
+/* Estilos del botón hamburguesa animado -------------------------------------------------------*/
+/* Botón hamburguesa */
+.menu-icon {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Asegura separación entre líneas */
+    width: 35px;
+    height: 25px;
+    cursor: pointer;
+    z-index: 101;
+    margin-left: auto; /* Empuja el icono a la derecha */
+    margin-right: 1rem; /* Da espacio al borde derecho */
+}
+
+/* Líneas del menú */
+.menu-icon div {
+    height: 4px;
+    width: 100%;
+    background-color: white;
+    border-radius: 5px;
+    transition: transform 0.4s ease, opacity 0.4s ease;
+}
+
+/* Animación al hacer clic: línea superior e inferior crean una "X" */
+.menu-icon.open div:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+}
+
+.menu-icon.open div:nth-child(2) {
+    opacity: 0;
+    /* Oculta la línea del medio */
+}
+
+.menu-icon.open div:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -5px);
+}
+
+/* Menú desplegable oculto por defecto */
+.menu {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 60px;
+    right: 20px;
+    background-color: rgba(0, 0, 0, 0.8);
+    /* Fondo oscuro semi-transparente */
+    border-radius: 5px;
+    padding: 10px 0;
+    z-index: 99;
+    margin-right: 3.5rem;
+    z-index: 1001 !important;
+
+}
+
+/* Estilo del texto del menú con animación divertida-------------------------------------------- */
+.menu a {
+    padding: 10px 20px;
+    text-decoration: none;
+    font-size: 22px;
+    color: white;
+    text-align: center;
+    transition: all 0.3s ease;
+    font-weight: bold;
+    text-transform: uppercase;
+    /* Texto en mayúsculas */
+    letter-spacing: 2px;
+    /* Espaciado entre letras */
+    position: relative;
+    display: inline-block;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+}
+
+/* Animación divertida en hover: zoom y cambio de color */
+.menu a:hover {
+    background: linear-gradient(60deg, hsl(0, 0%, 100%), hsl(0, 0%, 100%));
+    color: #1a1a1a;
+    transform: scale(1.1);
+    box-shadow: 0 4px 8px rgba(0, 238, 255, 0.4);
+    border-radius: 5px;
+}
+
+/* Mostrar el menú cuando está activo */
+.menu.open {
+    display: flex;
+    animation: fadeIn 0.5s ease;
+}
+
+/* Animación de desvanecimiento */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+/* Responsive: hacer que el menú sea adecuado para móviles */
+@media (min-width: 768px) {
+
+    .menu {
+        display: flex;
+        flex-direction: row;
+        position: static;
+        background-color: transparent;
+        justify-content: space-between;
+        /*background:linear-gradient(60deg, hsl(200, 100%, 56%), hsl(180, 84%, 72%));*/
+        border: 0px solid #ffffff;
+        /* Borde para separación visual */
+        border-radius: 10px;
+        
+    }
+
+    .navbar {
+        justify-content: center; /* Hace el navbar más compacto */
+    }
+
+    .menu-icon {
+        display: none; /* Oculta el menú hamburguesa en escritorio */
+    }
+
+    .menu a {
+        padding: 10px 20px;
+        font-size: 18px;
+
+    }
+
+}
+
+
+/* Submenú */
+.menu-item {
+    position: relative;
+    text-align: center;
+}
+
+.menu-item:hover .submenu {
+    display: flex;
+    flex-direction: column;
+    animation: fadeIn 0.3s ease;
+    background-color: #14181b;
+}
+
+.submenu {
+    display: none;
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.284);
+    min-width: 170px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    z-index: 1;
+    max-height: 300px;
+    /* Limita la altura a 150px */
+    align-items: center;
+    flex-direction: column;
+    border-radius: 10px;
+    z-index: 1002 !important;
+
+
+}
+
+.submenu a {
+    padding: 10px 20px;
+    text-decoration: none;
+    font-size: 18px;
+    color: white;
+    text-align: center;
+    transition: all 0.3s ease;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    position: relative;
+
+}
+
+/*-----------------------------------------------------------------------------------------------*/
+

@@ -1,0 +1,78 @@
+/* Contenedor del carrito flotante */
+.cart-container {
+  position: fixed;
+  top: 75px; /* Mayor separación del navegador */
+  right: 20px;
+  z-index: 1000;
+}
+
+/* Imagen del carrito */
+.cart-icon {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: transform 0.3s ease-in-out;
+}
+
+.cart-icon:hover {
+  transform: scale(1.1);
+}
+
+/* Contenedor del carrito desplegable */
+.cart-dropdown {
+  position: fixed;
+  top: 155px; /* Más separado para que no interfiera */
+  right: 20px;
+  width: 320px;
+  background: linear-gradient(60deg, hsl(182, 66%, 77%), hsl(207, 100%, 50%));
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  padding: 15px;
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.5s ease, opacity 0.5s ease;
+}
+
+/* Mostrar el carrito cuando está activo */
+.cart-dropdown.active {
+  max-height: 500px;
+  opacity: 1;
+}
+
+/* Fondo oscuro al abrir el carrito */
+.cart-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 999;
+}
+
+.cart-overlay.active {
+  display: block;
+}
+
+/* 🌐 RESPONSIVE: Ajustes para móviles */
+@media (max-width: 768px) {
+  .cart-container {
+      top: 90px; /* También aseguramos 100px en móviles */
+      right: 10px;
+  }
+  
+  .cart-icon {
+      width: 60px;
+      height: 60px;
+  }
+
+  .cart-dropdown {
+      top: 170px;
+      right: 10px;
+      width: 90%;
+      max-width: 320px;
+  }
+}

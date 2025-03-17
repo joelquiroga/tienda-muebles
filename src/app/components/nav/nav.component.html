@@ -1,0 +1,63 @@
+<header>
+    <nav class="navbar">
+        <a href="#" routerLink="" routerLinkActive="activarLink">
+            <img src="https://criptozen.com/imagenes/logo-muebles.png" alt="Logo">
+        </a>
+
+        <div class="menu-icon" id="menuIcon" [class.open]="menuOpen" (click)="toggleMenu()">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+
+        <div id="menu" class="menu" [class.open]="menuOpen">
+            <a routerLink="" routerLinkActive="activarLink">Inicio</a>
+
+            <div class="menu-item">
+                <a  (mouseenter)="!isMobile && openSubmenu('submenuPool')" 
+                (mouseleave)="!isMobile && closeSubmenu('submenuPool')" 
+                (click)="toggleSubmenu('submenuPool')">Productos</a>
+                <div class="submenu" id="submenuPool" [style.display]="submenuStates['submenuPool'] ? 'flex' : 'none'">
+                    <a routerLink="productos" routerLinkActive="activarLink" (mouseenter)="openSubmenu('submenuPool')" (mouseleave)="closeSubmenu('submenuPool')">Todos los Productos</a>
+                    <a href="#" (mouseenter)="openSubmenu('submenuPool')" (mouseleave)="closeSubmenu('submenuPool')">Sofás</a>
+                    <a href="#" (mouseenter)="openSubmenu('submenuPool')" (mouseleave)="closeSubmenu('submenuPool')">Canapes</a>
+                    <a href="#" (mouseenter)="openSubmenu('submenuPool')" (mouseleave)="closeSubmenu('submenuPool')">Colchones</a>
+                </div>
+            </div>
+
+            <div class="menu-item">
+                <a  (mouseenter)="!isMobile && openSubmenu('submenuPerfil')" 
+                (mouseleave)="!isMobile && closeSubmenu('submenuPerfil')" 
+                (click)="toggleSubmenu('submenuPerfil')">Perfil</a>
+                <div class="submenu" id="submenuPerfil"
+                    [style.display]="submenuStates['submenuPerfil'] ? 'flex' : 'none'">
+                    <a routerLink="perfil" routerLinkActive="activarLink" (mouseenter)="openSubmenu('submenuPerfil')" (mouseleave)="closeSubmenu('submenuPerfil')">Información</a>
+                    <a routerLink="login" routerLinkActive="activarLink" (mouseenter)="openSubmenu('submenuPerfil')" (mouseleave)="closeSubmenu('submenuPerfil')">Iniciar Sesión</a>
+                    <a routerLink="registro" routerLinkActive="activarLink" (mouseenter)="openSubmenu('submenuPerfil')" (mouseleave)="closeSubmenu('submenuPerfil')">Registrarse</a>
+                </div>
+            </div>
+
+            <div class="menu-item">
+                <a (mouseenter)="!isMobile && openSubmenu('submenuGaleria')" 
+                (mouseleave)="!isMobile && closeSubmenu('submenuGaleria')" 
+                (click)="toggleSubmenu('submenuGaleria')">Galería</a>
+                <div class="submenu" id="submenuGaleria"
+                    [style.display]="submenuStates['submenuGaleria'] ? 'flex' : 'none'">
+                    <a routerLink="galeria" routerLinkActive="activarLink" (mouseenter)="openSubmenu('submenuGaleria')" (mouseleave)="closeSubmenu('submenuGaleria')">Catálogo</a>
+                    <a href="#" (mouseenter)="openSubmenu('submenuGaleria')" (mouseleave)="closeSubmenu('submenuGaleria')">Descarga</a>
+                </div>
+            </div>
+
+            <!--
+            <div class="menu-item">
+                <a href="#" routerLink="carrito" routerLinkActive="activarLink" (mouseenter)="openSubmenu('submenuCarrito')" (mouseleave)="closeSubmenu('submenuCarrito')">Carrito</a>
+                <div class="submenu" id="submenuCarrito"
+                    [style.display]="submenuStates['submenuCarrito'] ? 'flex' : 'none'">
+                    <a routerLink="carrito" routerLinkActive="activarLink" (mouseenter)="openSubmenu('submenuCarrito')" (mouseleave)="closeSubmenu('submenuCarrito')">Ver carrito</a>
+                    <a routerLink="checkout" routerLinkActive="activarLink" (mouseenter)="openSubmenu('submenuCarrito')" (mouseleave)="closeSubmenu('submenuCarrito')">Pagar</a>
+                </div>
+            </div>
+            -->
+        </div>
+    </nav>
+</header>

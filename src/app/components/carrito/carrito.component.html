@@ -1,0 +1,22 @@
+<!-- Fondo oscuro para cerrar el carrito al hacer clic fuera -->
+<div class="cart-overlay" id="cartOverlay" (click)="toggleCart()"></div>
+
+<!-- Contenedor flotante del carrito -->
+<div class="cart-container">
+    <img src="https://i.pinimg.com/736x/27/b5/c8/27b5c85e70c94d27a97d22f32be291a5.jpg" alt="Carrito" class="cart-icon" (click)="toggleCart()">
+    
+    <!-- Contenedor de los datos del carrito -->
+    <div class="cart-dropdown" id="cartDropdown">
+        <h3>Tu Carrito</h3>
+        <div *ngIf="cartItems.length > 0; else emptyCart">
+            <ul>
+                <li *ngFor="let item of cartItems">
+                    {{ item.name }} - {{ item.price | currency }}
+                </li>
+            </ul>
+        </div>
+        <ng-template #emptyCart>
+            <p>Tu carrito está vacío</p>
+        </ng-template>
+    </div>
+</div>
