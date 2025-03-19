@@ -1,74 +1,170 @@
-.galeria {
+/* Diseño del grid de productos */
+.product-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  /* Columnas flexibles */
-  gap: 15px;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
   padding: 20px;
 }
 
-/* 📌 Asegurar 2 columnas en móviles */
-@media (max-width: 600px) {
-  .galeria {
-    grid-template-columns: repeat(2, 1fr);
-    /* 2 columnas fijas en pantallas pequeñas */
-  }
-}
-
-/* 📌 Para pantallas muy pequeñas (ejemplo: 350px de ancho) */
-@media (max-width: 400px) {
-  .galeria {
-    grid-template-columns: 1fr;
-    /* 1 columna si el espacio es muy reducido */
-  }
-}
-
-.imagen-container {
+/* Estilo de cada tarjeta de producto */
+.product-card {
   position: relative;
-  cursor: pointer;
-  overflow: hidden;
+  background: #ffffff;
   border-radius: 10px;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+  text-align: center;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.product-card:hover {
+  transform: scale(1.03);
+  box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Imagen del producto ocupando todo el espacio disponible */
+.product-image {
+  width: 100%;
+  height: 400px;
+  object-fit: cover; /* Ajusta la imagen sin deformarla */
   transition: transform 0.3s ease-in-out;
 }
 
-.imagen-container img {
-  width: 100%;
-  height: auto;
-  border-radius: 10px;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.imagen-container:hover {
+.product-card:hover .product-image {
   transform: scale(1.05);
 }
 
-.caption {
+/* Contenedor de la información del producto */
+.product-info {
   position: absolute;
-  bottom: 10px;
-  left: 0;
-  right: 0;
-  background: rgba(0, 0, 0, 0.6);
-  color: white;
+  bottom: 0;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.7); /* Fondo oscuro semitransparente */
+  color: #000000;
+  padding: 10px;
   text-align: center;
-  padding: 5px;
-  font-size: 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.botones {
+/* Estilo del nombre del producto */
+.product-info h3 {
+  font-size: 1.2rem;
+  margin: 5px 0;
+}
+
+/* Estilo del precio */
+.price {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #f8d210;
+}
+
+/* Botones dentro de la tarjeta */
+.product-buttons {
   display: flex;
-  justify-content: space-between;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.add-to-cart, .view-product {
+  flex: 1;
+  padding: 8px;
+  border: none;
+  cursor: pointer;
+  font-size: 0.9rem;
+  border-radius: 5px;
+  transition: background 0.3s, transform 0.2s;
+}
+
+.add-to-cart {
+  background: linear-gradient(135deg, #28a745, #1d7f30);
+  color: white;
+}
+
+.view-product {
+  background: linear-gradient(135deg, #007bff, #0056b3);
+  color: white;
+}
+
+.add-to-cart:hover, .view-product:hover {
+  transform: scale(1.05);
+  filter: brightness(1.2);
+}
+
+/* Modal de imágenes */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  position: relative;
+  max-width: 80%;
+  max-height: 90%;
+  text-align: center;
+}
+
+.modal-image {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+
+/* Contenedor de miniaturas */
+.thumbnail-container {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
   margin-top: 10px;
 }
 
-.botones button {
-  background-color: #007bff;
-  color: white;
-  border: none;
-  padding: 8px;
-  border-radius: 5px;
+.thumbnail {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
   cursor: pointer;
-  transition: background 0.3s;
+  border-radius: 5px;
+  border: 2px solid transparent;
+  transition: transform 0.2s ease-in-out, border 0.2s ease-in-out;
 }
 
-.botones button:hover {
-  background-color: #0056b3;
+.thumbnail:hover {
+  transform: scale(1.1);
+}
+
+.active-thumbnail {
+  border: 2px solid #f8d210;
+}
+
+/* Botón de cerrar */
+.close-modal {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: red;
+  color: white;
+  border: none;
+  font-size: 1.5rem;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.close-modal:hover {
+  background: darkred;
+}
+
+/* Bloquear scroll cuando el modal está abierto */
+.no-scroll {
+  overflow: hidden;
 }

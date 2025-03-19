@@ -1,12 +1,36 @@
-<div class="galeria">
-  <div *ngFor="let producto of productos" class="imagen-container">
-    <img [src]="producto.images[0]?.src" [alt]="producto.name" />
-    <div class="caption">{{ producto.name }}</div>
+<div class="product-grid">
+  <div *ngFor="let product of products" class="product-card">
+    <img [src]="product.images[0]" (click)="openModal(product)" alt="{{ product.name }}" class="product-image">
     
-    <div class="botones">
-      <button (click)="agregarAlCarrito(producto.id)">🛒 Añadir al carrito</button>
-      <button (click)="comprarAhora(producto.id)">⚡ Comprar</button>
-      <button (click)="darMeGusta(producto.id)">❤️ Me gusta</button>
+    <div class="product-info">
+      <h3>{{ product.name }}</h3>
+      <p class="price">Precio: {{ product.price | currency:'EUR' }}</p>
+      <div class="product-buttons">
+        <button (click)="addToCart(product)" class="add-to-cart">Agregar al Carrito</button>
+        <button (click)="openModal(product)" class="view-product">Ver Producto</button>
+      </div>      
     </div>
+  </div>
+</div>
+
+<!-- Modal para ver imágenes en grande -->
+<div *ngIf="selectedProduct" class="modal-overlay" (click)="closeModal()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <!-- Imagen principal en el modal -->
+    <img [src]="selectedProduct.images[selectedImageIndex]" alt="{{ selectedProduct.name }}" class="modal-image">
+
+    <!-- Contenedor de miniaturas -->
+    <div class="thumbnail-container">
+      <img 
+        *ngFor="let img of selectedProduct.images; let i = index" 
+        [src]="img" 
+        (click)="changeImage(i)" 
+        [class.active-thumbnail]="i === selectedImageIndex"
+        class="thumbnail"
+      >
+    </div>
+
+    <!-- Botón de cerrar -->
+    <button class="close-modal" (click)="closeModal()">✖</button>
   </div>
 </div>

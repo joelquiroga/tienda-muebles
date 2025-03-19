@@ -3,17 +3,21 @@
 
 <!-- Contenedor flotante del carrito -->
 <div class="cart-container">
-    <img src="https://i.pinimg.com/736x/27/b5/c8/27b5c85e70c94d27a97d22f32be291a5.jpg" alt="Carrito" class="cart-icon" (click)="toggleCart()">
+    <img src="https://i.pinimg.com/736x/27/b5/c8/27b5c85e70c94d27a97d22f32be291a5.jpg" 
+         alt="Carrito" class="cart-icon" (click)="toggleCart()">
     
     <!-- Contenedor de los datos del carrito -->
     <div class="cart-dropdown" id="cartDropdown">
         <h3>Tu Carrito</h3>
         <div *ngIf="cartItems.length > 0; else emptyCart">
             <ul>
-                <li *ngFor="let item of cartItems">
-                    {{ item.name }} - {{ item.price | currency }}
+                <li *ngFor="let item of cartItems; let i = index">
+                    {{ item.name }} - {{ item.price | currency:'EUR' }} 
+                    <button (click)="removeItem(i)">❌</button>
                 </li>
             </ul>
+            <h3>Total: {{ totalPrice | currency:'EUR' }}</h3>
+            <button class="checkout-button" (click)="checkout()">Pagar con Stripe</button>
         </div>
         <ng-template #emptyCart>
             <p>Tu carrito está vacío</p>

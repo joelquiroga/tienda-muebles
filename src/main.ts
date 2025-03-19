@@ -9,6 +9,8 @@ import { routes } from './app/app.routes';
 // Importa appConfig, que contiene los providers configurados en app.config.ts.
 import { appConfig } from './app/app.config';
 
+import { provideHttpClient } from '@angular/common/http';
+
 /*
 ✅bootstrapApplication(AppComponent, {...}) inicia la aplicación de Angular con la configuración adecuada.
 ✅ providers: [...appConfig.providers, provideRouter(routes)] fusiona los proveedores definidos en appConfig con los del enrutador.
@@ -16,7 +18,7 @@ import { appConfig } from './app/app.config';
 */
 
 bootstrapApplication(AppComponent, {
-  providers: [...appConfig.providers, provideRouter(routes)]
+  providers: [...appConfig.providers, provideRouter(routes),provideHttpClient()]
 }).catch(err => console.error(err));
 
 /*
