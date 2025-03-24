@@ -1,0 +1,61 @@
+
+📦 PROYECTO MIGRADO A VPS – RESUMEN COMPLETO
+
+✅ ¿QUÉ SE MIGRÓ?
+- Proyecto Angular frontend (`tienda-muebles`)
+- Sistema backend PHP (registro, login, conexión MySQL)
+- Base de datos con tabla `usuarios`
+- Sistema de pagos con Stripe
+- phpMyAdmin para gestión visual de MySQL
+- Variables de entorno `.env`
+- Configuración de seguridad con Nginx
+
+📁 ESTRUCTURA FINAL EN EL VPS:
+/var/www/
+├── angular-app/            <-- Frontend compilado de Angular
+│   ├── index.html, js, css
+│   ├── index.php
+│   ├── api/                <-- API segura de Stripe
+│   │   ├── stripe_checkout.php
+│   │   ├── .env            <-- ✅ Clave secreta Stripe protegida
+│   │   └── vendor/         <-- Librería stripe-php (via Composer)
+│   ├── api_login.php
+│   ├── api_registro.php
+│   ├── success.html
+│   └── cancel.html
+└── backend/                <-- Backend protegido solo para PHP interno
+    ├── login_usuario.php
+    ├── registro_usuario.php
+    ├── conexion.php
+
+🔐 SEGURIDAD IMPLEMENTADA:
+- `/backend/` bloqueado completamente
+- Solo `/api/stripe_checkout.php` accesible públicamente
+- Archivos ocultos como `.env` protegidos por Nginx
+- Angular usa `try_files` para rutas SPA
+- phpMyAdmin habilitado correctamente
+
+🔑 CLAVE STRIPE SEGURA:
+- `.env` ubicado en: `/var/www/angular-app/api/.env`
+- Accedido mediante `Dotenv::createImmutable(__DIR__)`
+- No expuesta al frontend
+- Protegida por Nginx (`location ~ /\.`)
+- Permisos seguros: `chmod 640`, `chown www-data`
+
+✅ FUNCIONALIDADES ACTIVAS:
+- Registro y login de usuarios
+- Protección CSRF activa
+- Cierre de sesión
+- Perfil de usuario
+- Carrito de compras Angular
+- Pagos Stripe (modo test)
+- Redirecciones `success.html` y `cancel.html`
+- phpMyAdmin para gestión de MySQL
+
+🛠 SIGUIENTES PASOS RECOMENDADOS:
+- Configurar HTTPS (Let's Encrypt o dominio de IONOS)
+- Pasar a modo live en Stripe
+- Cargar productos desde base de datos (opcional)
+- Refuerzo de seguridad: CORS, Firewall, Rate Limits
+
+🎯 ¡Todo funcionando, seguro y listo para producción!

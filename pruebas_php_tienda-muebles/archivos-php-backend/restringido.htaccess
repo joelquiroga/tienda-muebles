@@ -1,0 +1,4 @@
+<Files "conexion.php">
+Order Deny,Allow
+Deny from all
+</Files>

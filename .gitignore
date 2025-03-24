@@ -6,6 +6,11 @@
 /out-tsc
 /bazel-out
 
+# Dependencias
+node_modules/
+vendor/
+dist/
+
 # Node
 /node_modules
 npm-debug.log
@@ -38,6 +43,7 @@ testem.log
 /typings
 
 # System files
+*.log
 .DS_Store
 Thumbs.db
 

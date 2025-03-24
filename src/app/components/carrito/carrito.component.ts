@@ -13,7 +13,7 @@ export class CarritoComponent implements OnInit {
   cartItems: any[] = [];
   totalPrice: number = 0;
   cartOpen: boolean = false; // Estado del carrito
-  stripePromise = loadStripe('pk_test_51PkQ4GRw4RJUah63uPLIMFD4yTWVTgNU6eQtX0vDpNRRhFdXslZLEpJFPakwHsFDfc15jasU6LIkqyu9TgO1PA2e00C5R8CS6a'); // Clave pública de Stripe
+  stripePromise = loadStripe('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'); // Clave pública de Stripe
 
   constructor(private cartService: CartService) {}
 
@@ -53,7 +53,8 @@ export class CarritoComponent implements OnInit {
     }
 
     try {
-      const response = await fetch('/.netlify/functions/create-checkout', {
+      // ✅ ACTUALIZACIÓN: usar el backend de tu VPS
+      const response = await fetch('/api/stripe_checkout.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ items: this.cartItems })
@@ -70,4 +71,5 @@ export class CarritoComponent implements OnInit {
     }
   }
 }
+
 
