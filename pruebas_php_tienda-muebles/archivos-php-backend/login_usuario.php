@@ -1,6 +1,6 @@
 <?php
 session_start();
-
+$_SESSION['usuario'] = $usuario;
 // Verificar CSRF token
 if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
     http_response_code(403);

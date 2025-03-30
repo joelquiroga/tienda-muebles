@@ -1,8 +1,76 @@
 <div class="checkout-container">
-    <h2 style="color: black;">Tu Carrito</h2>
-    <ul>
-      <li style="color: black;">Producto Ejemplo - $20.00</li>
-    </ul>
-    <button (click)="checkout()">Pagar con Stripe</button>
+
+  <!-----------------------SESIÓN DEL USUARIO---------------------------------------------------------->
+
+  <!-- DATOS DEL CLIENTE -->
+  <div class="checkout-user-info" *ngIf="usuario">
+    <div class="cliente-header">
+      <h3>Datos del Cliente</h3>
+      <button routerLink="/perfil" routerLinkActive="activarLink" class="btn-pequeno">Cambiar datos</button>
+    </div>
+
+    <p><strong>Nombre:</strong> {{ usuario.nombre_completo }}</p>
+    <p><strong>Correo:</strong> {{ usuario.correo }}</p>
+    <p><strong>Dirección:</strong> {{ usuario.direccion }}, {{ usuario.ciudad }}, {{ usuario.comunidad_autonoma }}</p>
+    <p><strong>Codigo Postal:</strong> {{ usuario.codigo_postal }}</p>
+    <p><strong>Movil:</strong> {{ usuario.movil }}</p>
   </div>
-  
+
+  <!-- Si no hay sesión -->
+  <div class="checkout-user-warning cliente-header" *ngIf="!usuario">
+    <p class="text-warning">⚠️ Debes iniciar sesión para completar la compra.</p>
+    <button routerLink="/perfil" routerLinkActive="activarLink" class="btn-pequeno-naranja">Iniciar Sesión</button>
+  </div>
+
+  <!--FORMULARIO DE COMPRA--------------------->
+  <div class="billing-form">
+    <h3>Datos de Facturación (envío/dirección de entrega)</h3>
+
+    <label>Nombre completo:</label>
+    <input type="text" [(ngModel)]="facturacion.nombre" required>
+
+    <label>Teléfono:</label>
+    <input type="tel" [(ngModel)]="facturacion.telefono" required>
+
+    <label>Dirección:</label>
+    <input type="text" [(ngModel)]="facturacion.direccion" required>
+
+    <label>Ciudad:</label>
+    <input type="text" [(ngModel)]="facturacion.ciudad" required>
+
+    <label>Provincia:</label>
+    <input type="text" [(ngModel)]="facturacion.provincia" required>
+
+    <label>Código Postal:</label>
+    <input type="text" [(ngModel)]="facturacion.codigo_postal" required>
+
+    <label>Comentarios adicionales:</label>
+    <textarea [(ngModel)]="facturacion.comentarios"></textarea>
+  </div>
+
+
+  <!-----------------------STRIPE---------------------------------------------------------->
+  <h2>Resumen de tu compra</h2>
+
+  <ul class="checkout-list">
+    <li *ngFor="let item of cartItems" class="checkout-item">
+      <img [src]="item.images[0]" class="checkout-img" alt="Imagen" />
+      <div class="checkout-info">
+        <div>{{ item.name }}</div>
+        <div>{{ item.price | currency:'EUR' }} x {{ item.quantity }}</div>
+      </div>
+    </li>
+  </ul>
+
+  <div class="checkout-summary">
+    <strong>Envio Gratuito</strong>
+    <p>Subtotal: <strong>{{ subtotal | currency:'EUR' }}</strong></p>
+    <p *ngIf="discount > 0">
+      Descuento ({{ discount }}%):
+      <strong>-{{ discountAmount | currency:'EUR' }}</strong>
+    </p>
+    <p>Total a pagar: <strong>{{ total | currency:'EUR' }}</strong></p>
+  </div>
+
+  <button (click)="finalizarCompra()">Finalizar Compra</button>
+</div>

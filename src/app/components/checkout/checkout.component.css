@@ -1,0 +1,143 @@
+.checkout-container {
+  max-width: 600px;
+  margin: auto;
+  padding: 2rem;
+  background: #f4f4f4;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  color: black;
+}
+
+.checkout-list {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 1rem;
+}
+
+.checkout-item {
+  display: flex;
+  align-items: center;
+  background: white;
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 8px;
+  justify-content: space-between;
+}
+
+.checkout-img {
+  width: 100px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 6px;
+  margin-right: 15px;
+}
+
+.checkout-summary p {
+  font-size: 1rem;
+  margin: 6px 0;
+}
+
+button {
+  background: #007bff;
+  color: white;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #0056b3;
+}
+
+.checkout-info{
+  color: black;
+}
+
+/*SESIÓN DE USUARIO*/
+
+.checkout-user-info {
+  background-color: #f8f8f8;
+  border-left: 4px solid #007bff;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  border-radius: 6px;
+  font-size: 15px;
+}
+
+.checkout-user-info h3 {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  color: #007bff;
+}
+
+.checkout-user-warning {
+  background-color: #fff3cd;
+  border-left: 4px solid #ffc107;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  border-radius: 6px;
+  font-size: 14px;
+  color: #856404;
+}
+
+.cliente-header {
+  display: flex;          /* Alinea en horizontal */
+  align-items: center;    /* Alinea verticalmente */
+  justify-content: space-between; /* Separa el título y el botón */
+  gap: 10px;              /* Espacio entre elementos */
+}
+
+.btn-pequeno {
+  background-color: #007bff; /* Azul */
+  color: white;              /* Texto blanco */
+  border: none;
+  padding: 5px 10px;         /* Tamaño pequeño */
+  font-size: 14px;
+  border-radius: 5px;        /* Bordes redondeados */
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.btn-pequeno:hover {
+  background-color: #0056b3; /* Azul más oscuro al pasar el mouse */
+}
+
+.btn-pequeno-naranja {
+  background-color: #ff9c2c; 
+  color: white;              
+  border: none;
+  padding: 5px 10px;         
+  border-radius: 5px;        
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.btn-pequeno-naranja:hover {
+  background-color: #fe7f00; 
+}
+
+/*formulario de compra*/
+
+.billing-form {
+  margin-top: 30px;
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 8px rgba(0,0,0,0.1);
+}
+
+.billing-form label {
+  display: block;
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+.billing-form input,
+.billing-form textarea {
+  width: 100%;
+  padding: 8px;
+  margin-top: 4px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}

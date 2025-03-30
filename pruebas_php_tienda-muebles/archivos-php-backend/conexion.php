@@ -1,8 +1,8 @@
 <?php
 
   $host = 'XXXXXXXXXXX';
-  $database = 'XXXXXXXXX';
-  $user = 'XXXXXXXXXXXX';
+  $database = 'XXXXXXXXXXX';
+  $user = 'XXXXXXXXXXX';
   $password = 'XXXXXXXXXXX';
 
   // Crear conexión

@@ -6,31 +6,50 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class CartService {
   private cartItems: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
+  private discount: BehaviorSubject<number> = new BehaviorSubject<number>(0); // cupón
 
   constructor() {}
 
-  // Obtener productos del carrito como un Observable
+  // Carrito
   getCartItems() {
     return this.cartItems.asObservable();
   }
 
-  // Agregar producto al carrito y notificar cambios
   addToCart(product: any) {
     const items = this.cartItems.getValue();
-    items.push(product);
-    this.cartItems.next([...items]); // Emitir cambios
+    const existingItem = items.find(item => item.name === product.name);
+
+    if (existingItem) {
+      existingItem.quantity = (existingItem.quantity || 1) + 1;
+    } else {
+      items.push({ ...product, quantity: 1 });
+    }
+
+    this.cartItems.next([...items]);
   }
 
-  // Eliminar producto del carrito por índice y notificar cambios
   removeFromCart(index: number) {
     const items = this.cartItems.getValue();
     items.splice(index, 1);
-    this.cartItems.next([...items]); // Emitir cambios
+    this.cartItems.next([...items]);
   }
 
-  // Vaciar carrito después del pago y notificar cambios
   clearCart() {
-    this.cartItems.next([]); // Emitir carrito vacío
+    this.cartItems.next([]);
   }
+
+  updateCart(items: any[]) {
+    this.cartItems.next([...items]);
+  }
+
+  // Cupón de descuento
+  setDiscount(percent: number) {
+    this.discount.next(percent);
+  }
+
+  getDiscount() {
+    return this.discount.asObservable();
+  }
+  
 }
 

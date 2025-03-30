@@ -23,17 +23,25 @@ if (!isset($input['items']) || count($input['items']) === 0) {
     exit;
 }
 
-// Crear los productos para Stripe Checkout
-$line_items = array_map(function ($product) {
+// Leer descuento (porcentaje) desde el frontend
+$discountPercentage = isset($input['discount']) ? intval($input['discount']) : 0;
+
+// Crear los productos para Stripe Checkout con el descuento aplicado
+$line_items = array_map(function ($product) use ($discountPercentage) {
+    $unitPrice = intval($product['price']) * 100;
+    $discountedPrice = $unitPrice;
+
+    if ($discountPercentage > 0) {
+        $discountedPrice = intval($unitPrice - ($unitPrice * $discountPercentage / 100));
+    }
+
     return [
         'price_data' => [
             'currency' => 'eur',
-            'product_data' => [
-                'name' => $product['name']
-            ],
-            'unit_amount' => $product['price'] * 100
+            'product_data' => ['name' => $product['name']],
+            'unit_amount' => $discountedPrice,
         ],
-        'quantity' => $product['quantity'] ?? 1
+        'quantity' => intval($product['quantity'])
     ];
 }, $input['items']);
 
@@ -42,8 +50,8 @@ try {
         'payment_method_types' => ['card'],
         'line_items' => $line_items,
         'mode' => 'payment',
-        'success_url' => 'https://XXXXXXXXXXXX/success.html',
-        'cancel_url' => 'https://XXXXXXXXXXXX/cancel.html'
+        'success_url' => 'http://217.160.204.31/success.html',
+        'cancel_url' => 'http://217.160.204.31/cancel.html'
     ]);
 
     echo json_encode(['id' => $session->id]);
@@ -51,3 +59,4 @@ try {
     http_response_code(500);
     echo json_encode(['error' => $e->getMessage()]);
 }
+?>

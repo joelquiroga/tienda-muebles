@@ -1,101 +1,121 @@
-
 # 🛒 Tienda Muebles – Angular + PHP + Stripe (VPS)
 
-Este proyecto es una tienda online funcional con frontend en Angular y backend en PHP. Cuenta con autenticación de usuarios, gestión de carrito de compras y pasarela de pago Stripe, todo migrado exitosamente desde un hosting compartido a un VPS propio.
+Este proyecto es una tienda online funcional con frontend en Angular y backend en PHP. Incluye autenticación, gestión de pedidos, integración con Stripe y un sistema robusto de logs y seguridad, todo alojado en un servidor VPS.
 
 ---
 
 ## ✅ Funcionalidades
 
 - Registro e inicio de sesión de usuarios (con protección CSRF)
-- Carrito dinámico con Angular + Stripe
-- Pagos reales (modo test ahora, listo para modo LIVE)
-- Panel de gestión de base de datos vía phpMyAdmin
-- Uso de variables de entorno `.env` seguras para claves privadas
-- Backend y API aisladas, seguras y protegidas
+- Gestión de carrito de compras en tiempo real (Angular)
+- Proceso de compra con Stripe Checkout
+- Inserción de órdenes y productos en MySQL
+- Manejo de sesiones con PHP y cookies seguras
+- Uso de logs (`/tmp/debug_env_path.log`) para depurar errores
+- API intermedia (`api_procesar_orden.php`) para acceder de forma segura al backend
+- Carga de claves privadas desde `.env` en el backend
+- Redirección automática a Stripe en el proceso de compra
 
 ---
 
-## 🛠 Tecnologías
+## 🛠 Tecnologías Utilizadas
 
 - **Angular 17** – Frontend SPA
 - **PHP 8.3** – Backend
 - **MySQL** – Base de datos
-- **Stripe** – Procesamiento de pagos
+- **Stripe** – Pasarela de pago
+- **Dotenv** – Variables de entorno seguras
 - **Nginx** – Servidor web
+- **phpMyAdmin** – Gestión de base de datos
 - **Composer** – Dependencias PHP
-- **Dotenv** – Manejo de variables de entorno
 
 ---
 
-## 📁 Estructura de Archivos
+## 📁 Estructura del Proyecto
 
 ```
 /var/www/
 ├── angular-app/
-│   ├── index.html, js, css
-│   ├── index.php
-│   ├── api/
-│   │   ├── stripe_checkout.php
-│   │   ├── .env               <-- Clave privada Stripe (test/live)
-│   │   └── vendor/
-│   ├── api_login.php
-│   ├── api_registro.php
-│   ├── success.html
-│   └── cancel.html
+│   ├── api_procesar_orden.php         <-- Llama internamente a backend/procesar_orden.php
+│   ├── api_get_usuario.php
+│   ├── api_login.php / api_registro.php
+│   ├── index.html (Angular)
+│   ├── cancel.html / success.html
+│   └── api/stripe_checkout.php
 ├── backend/
-│   ├── registro_usuario.php
-│   ├── login_usuario.php
-│   └── conexion.php
+│   ├── procesar_orden.php             <-- Código principal del pedido
+│   ├── conexion.php                   <-- Conexión DB protegida
+│   ├── get_usuario.php / registro_usuario.php
+│   ├── .env                           <-- STRIPE_SECRET_KEY
+│   └── vendor/                        <-- Composer (Stripe SDK)
 ```
 
 ---
 
 ## 🔐 Seguridad
 
-- `.env` está fuera del frontend, protegido con Nginx (`location ~ /\.`)
-- `/backend` completamente denegado desde la web (`deny all`)
-- Stripe solo accesible vía `/api/stripe_checkout.php`
-- phpMyAdmin configurado de forma segura
-- Variables CSRF en formularios sensibles
+- `.env` oculto por configuración Nginx: `location ~ /\. { deny all; }`
+- Acceso al backend completamente restringido (`location /backend { deny all; }`)
+- Rutas PHP específicas liberadas con `location = /backend/archivo.php`
+- Comunicación segura Angular ↔ Backend mediante API intermedia
+- Logging detallado activado en `/tmp/debug_env_path.log`
+
+---
+
+## 🧪 Modo de Prueba con Stripe
+
+- El archivo `.env` debe contener:
+```env
+STRIPE_SECRET_KEY=sk_test_xxxxxxxxxxxxxxxxx
+```
+
+- Usa esta tarjeta de prueba para pagos:
+```
+4242 4242 4242 4242
+Fecha: cualquier fecha futura
+CVC: cualquier número
+ZIP: cualquier código
+```
+
+---
+
+## 🧰 Diagnóstico y Debug
+
+- El backend escribe información de depuración en: `/tmp/debug_env_path.log`
+- Revisa:
+  - Cookies y sesión (`PHPSESSID`)
+  - Datos recibidos del formulario
+  - Logs antes y después de ejecutar consultas SQL
+  - Respuestas de Stripe
 
 ---
 
 ## 🚀 Cómo desplegar
 
 ```bash
-# Clonar proyecto
-scp -r ./proyecto_web usuario@IP:/home/usuario
+# Subir archivos al VPS
+scp -r ./proyecto usuario@IP:/var/www/angular-app
 
-# Actualizar frontend y backend en Nginx
-bash deploy.sh
+# Reiniciar Nginx
+sudo systemctl reload nginx
 
-# Reiniciar servidor
-sudo systemctl restart nginx
+# Ver logs en tiempo real
+tail -f /tmp/debug_env_path.log
 ```
 
 ---
 
-## 🧪 Stripe de prueba
+## 📌 Próximas mejoras
 
-- Archivo `.env` debe tener:
-```
-STRIPE_SECRET_KEY=sk_test_xxxxxxxxxxxxxxxxx
-```
-
-- Para test, usar tarjeta: `4242 4242 4242 4242`  
-  Cualquier fecha futura, CVC, y ZIP
+- [ ] Certificado SSL (Let's Encrypt)
+- [ ] Dominio personalizado (ej. mueblestore.com)
+- [ ] Activar modo LIVE de Stripe
+- [ ] Envío de email de confirmación
+- [ ] Panel de administración para gestionar pedidos
 
 ---
 
-## 📌 Pendiente / Producción
+## 👨‍💻 Autor
 
-- [ ] Instalar certificado HTTPS (Let's Encrypt)
-- [ ] Añadir dominio personalizado (ej. IONOS)
-- [ ] Pasar a clave LIVE de Stripe
-- [ ] Agregar roles o panel de administración (opcional)
-
----
-
-## 📄 Autor
-Migración y desarrollo por el usuario con asistencia técnica de IA 🧠⚡
+Desarrollado y migrado por el usuario, con soporte técnico paso a paso de IA 🤖🚀  
+¡Un trabajo en equipo impecable para una solución sólida y profesional!

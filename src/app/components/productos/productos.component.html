@@ -32,5 +32,12 @@
 
     <!-- Botón de cerrar -->
     <button class="close-modal" (click)="closeModal()">✖</button>
+
   </div>
+
+</div>
+
+<!-- Notificación flotante -->
+<div *ngIf="toastMessage" class="toast">
+  {{ toastMessage }}
 </div>

@@ -38,9 +38,18 @@ export class ProductosComponent {
 
   constructor(private cartService: CartService) {}
 
+  toastMessage = '';
+
   addToCart(product: any) {
     this.cartService.addToCart(product);
-    alert(`${product.name} agregado al carrito`);
+    this.showToast(`${product.name} agregado al carrito`);
+  }
+  
+  showToast(message: string) {
+    this.toastMessage = message;
+    setTimeout(() => {
+      this.toastMessage = '';
+    }, 3000); // mensaje desaparece a los 3 segundos
   }
 
   openModal(product: any) {
