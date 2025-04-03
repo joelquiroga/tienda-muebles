@@ -1,6 +1,6 @@
 # 🛒 Tienda Muebles – Angular + PHP + Stripe (VPS)
 
-Este proyecto es una tienda online funcional con frontend en Angular y backend en PHP. Incluye autenticación, gestión de pedidos, integración con Stripe y un sistema robusto de logs y seguridad, todo alojado en un servidor VPS.
+Este proyecto es una tienda online funcional con frontend en Angular y backend en PHP. Incluye autenticación, gestión de pedidos, integración con Stripe y un sistema robusto de logs, emails automáticos y seguridad, todo alojado en un servidor VPS.
 
 ---
 
@@ -10,6 +10,7 @@ Este proyecto es una tienda online funcional con frontend en Angular y backend e
 - Gestión de carrito de compras en tiempo real (Angular)
 - Proceso de compra con Stripe Checkout
 - Inserción de órdenes y productos en MySQL
+- Envío de correo automático de confirmación al cliente y copia oculta (BCC)
 - Manejo de sesiones con PHP y cookies seguras
 - Uso de logs (`/tmp/debug_env_path.log`) para depurar errores
 - API intermedia (`api_procesar_orden.php`) para acceder de forma segura al backend
@@ -25,7 +26,8 @@ Este proyecto es una tienda online funcional con frontend en Angular y backend e
 - **MySQL** – Base de datos
 - **Stripe** – Pasarela de pago
 - **Dotenv** – Variables de entorno seguras
-- **Nginx** – Servidor web
+- **PHPMailer** – Envío de emails
+- **Nginx** – Servidor web con seguridad CSP
 - **phpMyAdmin** – Gestión de base de datos
 - **Composer** – Dependencias PHP
 
@@ -46,19 +48,42 @@ Este proyecto es una tienda online funcional con frontend en Angular y backend e
 │   ├── procesar_orden.php             <-- Código principal del pedido
 │   ├── conexion.php                   <-- Conexión DB protegida
 │   ├── get_usuario.php / registro_usuario.php
-│   ├── .env                           <-- STRIPE_SECRET_KEY
-│   └── vendor/                        <-- Composer (Stripe SDK)
+│   ├── .env                           <-- STRIPE y MAIL config
+│   └── vendor/                        <-- Composer (Stripe SDK, PHPMailer)
 ```
 
 ---
 
 ## 🔐 Seguridad
 
-- `.env` oculto por configuración Nginx: `location ~ /\. { deny all; }`
-- Acceso al backend completamente restringido (`location /backend { deny all; }`)
-- Rutas PHP específicas liberadas con `location = /backend/archivo.php`
-- Comunicación segura Angular ↔ Backend mediante API intermedia
+- `.env` oculto por configuración Nginx:  
+  `location ~ /\. { deny all; }`
+- Acceso al backend completamente restringido:  
+  `location /backend { deny all; }`
+- Rutas PHP específicas habilitadas con `location = /backend/archivo.php`
+- Políticas de seguridad CSP aplicadas para prevenir inyecciones de estilos/scripts
+- Comunicación segura Angular ↔ Backend mediante API
 - Logging detallado activado en `/tmp/debug_env_path.log`
+
+---
+
+## 📧 Envío de correos
+
+- Se usa **PHPMailer** para enviar confirmación de pedido al cliente
+- Se envía una copia oculta (BCC) al administrador (`MAIL_BCC`)
+- HTML mejorado con resumen visual del pedido e imagen de producto
+
+### .env ejemplo para IONOS:
+```env
+STRIPE_SECRET_KEY=sk_test_...
+MAIL_HOST=smtp.ionos.es
+MAIL_PORT=587
+MAIL_USERNAME=support@tudominio.com
+MAIL_PASSWORD=TuContraseña
+MAIL_FROM=support@tudominio.com
+MAIL_FROM_NAME="Tienda Online QM"
+MAIL_BCC=admin@tudominio.com
+```
 
 ---
 
@@ -81,12 +106,31 @@ ZIP: cualquier código
 
 ## 🧰 Diagnóstico y Debug
 
-- El backend escribe información de depuración en: `/tmp/debug_env_path.log`
-- Revisa:
-  - Cookies y sesión (`PHPSESSID`)
-  - Datos recibidos del formulario
-  - Logs antes y después de ejecutar consultas SQL
-  - Respuestas de Stripe
+- Verifica en `/tmp/debug_env_path.log`
+  - 📦 Datos del formulario
+  - 👤 Usuario autenticado
+  - ✅ Éxito de consultas SQL
+  - ✅ Correo enviado
+  - ✅ Stripe session creada
+
+```bash
+tail -f /tmp/debug_env_path.log
+```
+
+---
+
+## 🔒 Seguridad Nginx y CSP
+
+Configuración de seguridad en `default`:
+
+- Evita carga de archivos ocultos (`.env`, `.git`)
+- Solo permite rutas PHP específicas
+- Protege el backend con reglas Nginx
+- CSP para evitar scripts inyectados:
+
+```nginx
+add_header Content-Security-Policy "default-src 'self'; script-src 'self' https://js.stripe.com; style-src 'self' 'unsafe-inline'; img-src * data:;" always;
+```
 
 ---
 
@@ -96,21 +140,22 @@ ZIP: cualquier código
 # Subir archivos al VPS
 scp -r ./proyecto usuario@IP:/var/www/angular-app
 
-# Reiniciar Nginx
-sudo systemctl reload nginx
+# Instalar dependencias
+cd /var/www/backend
+composer install
 
-# Ver logs en tiempo real
-tail -f /tmp/debug_env_path.log
+# Recargar Nginx
+sudo systemctl reload nginx
 ```
 
 ---
 
 ## 📌 Próximas mejoras
 
-- [ ] Certificado SSL (Let's Encrypt)
-- [ ] Dominio personalizado (ej. mueblestore.com)
-- [ ] Activar modo LIVE de Stripe
-- [ ] Envío de email de confirmación
+- [x] Certificado SSL (Let's Encrypt) 🔒
+- [x] Envío de email de confirmación
+- [x] Copia oculta (BCC) al administrador
+- [ ] Dominio personalizado
 - [ ] Panel de administración para gestionar pedidos
 
 ---

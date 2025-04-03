@@ -19,7 +19,7 @@ export class CheckoutComponent implements OnInit {
   discount: number = 0;
   discountAmount: number = 0;
   total: number = 0;
-  stripePromise = loadStripe('pk_test_51PkQ4GRw4RJUah63uPLIMFD4yTWVTgNU6eQtX0vDpNRRhFdXslZLEpJFPakwHsFDfc15jasU6LIkqyu9TgO1PA2e00C5R8CS6a');
+  stripePromise = loadStripe('pk_test_51PkQ4GRw4RJUah63uPLIMFD4yTWVTgNU6eQtX0vDpNRRhFdXslZLEpJFPakwHsFDfc15jasU6LIkqyu9TgO1PA2e00C5R8CS6a'); // TEST de prueba
 
   // Usuario
   usuario: any = null;
